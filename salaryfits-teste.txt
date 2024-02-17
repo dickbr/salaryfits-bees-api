@@ -1,0 +1,47 @@
+Descrição do Teste:
+Neste teste, você será desafiado a criar uma aplicação backend inspirada em uma colônia de
+abelhas. Você implementará uma API RESTful utilizando Node.js, TypeScript e NestJS para
+gerenciar a comunicação entre as abelhas da colmeia. Além disso, você terá a liberdade de escolher
+o serviço de mensageria que melhor se adequa às necessidades do projeto.
+Requisitos:
+1. Setup do Projeto:
+• Inicialize um novo projeto utilizando NestJS com suporte a TypeScript.
+• Escolha e configure um serviço de mensageria de sua preferência. 
+2. Endpoints da API:
+• Crie um endpoint POST /bees para permitir que uma abelha seja registrada na 
+colmeia. Cada abelha terá um nome único.
+• Implemente um endpoint GET /bees para listar todas as abelhas registradas na 
+colmeia.
+• Crie um endpoint POST /messages que aceite mensagens JSON no formato 
+{ "sender": "string", "receiver": "string", "content": 
+"string" }. Este endpoint simulará uma abelha enviando uma mensagem para 
+outra.
+• Valide se os campos sender, receiver e content estão presentes e são strings.
+3. Lógica de Negócio:
+• Ao enviar uma mensagem, verifique se o remetente e o destinatário estão registrados 
+como abelhas na colmeia. Caso contrário, retorne um erro apropriado.
+• Utilize o serviço de mensageria escolhido para armazenar e distribuir as mensagens 
+enviadas pelas abelhas de forma assíncrona.
+4. Consumidor de Mensagens:
+• Implemente uma lógica para processar as mensagens enviadas pelas abelhas. Isso 
+pode incluir a recuperação e processamento das mensagens a partir do serviço 
+escolhido.
+Critérios de Avaliação:
+• Criatividade e Flexibilidade: Escolha um serviço de mensageria adequado às necessidades 
+do projeto e justifique sua escolha.
+• Funcionalidade: Certifique-se de que todos os requisitos foram implementados 
+corretamente.
+• Qualidade do Código: Siga boas práticas de codificação e mantenha o código limpo e 
+organizado.
+• Integração com o Serviço de Mensageria: Implementação correta e eficiente da 
+comunicação assíncrona entre as abelhas.
+• Testes Unitários: Inclua testes unitários para, pelo menos, uma parte do código.
+Entrega:
+• Disponibilize o código-fonte em um repositório Git público (GitHub, GitLab, etc.).
+• Inclua instruções claras sobre como configurar e executar a aplicação localmente.
+Observações:
+• Explore o tema das abelhas de forma criativa em sua implementação.
+• Fique à vontade para adicionar recursos ou funcionalidades extras que considerar relevantes 
+para o tema.
+• O esperado é uma entrega entre 4 a 5 dias da data de recebimento do teste.
+Boa sorte e divirta-se codificando
