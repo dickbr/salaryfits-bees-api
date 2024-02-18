@@ -1,12 +1,12 @@
 import { Bee } from '@database/postgres/entities/bee.entity';
-import { BeeRepository } from '@database/postgres/repositories/implementation/bee.repository';
+import { IBeeRepository } from '@database/postgres/repositories/interface/bee-repository.interface';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class GetBee {
-  constructor(private readonly beeRepository: BeeRepository) { }
+  constructor(private readonly repository: IBeeRepository) { }
 
   async execute(): Promise<Bee[]> {
-    return this.beeRepository.findAll();
+    return this.repository.findAll();
   }
 }

@@ -1,10 +1,10 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
-import { NotFoundBeeException } from 'core/exceptions/NotFoundBeeException';
+import { ExistsBeeException } from 'core/exceptions/ExistsBeeException';
 import { FastifyReply } from 'fastify';
 import { ErrorHandlerResponse } from './error-handler.response';
 
 @Catch(
-  NotFoundBeeException,
+  ExistsBeeException,
 )
 export class ErrorHandlerMiddleware implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {

@@ -7,6 +7,7 @@ import { BeeController } from 'controllers/bees/bees.controller';
 import { CreateBee } from 'core/use-cases/bees/create-bee/create-bee.use-case';
 import { GetBee } from 'core/use-cases/bees/get-bees/get-bee.use-case';
 import { SendMessage } from 'core/use-cases/bees/send-message/send-message.use-case';
+import 'dotenv/config';
 import { SqsModule } from 'sqs/sqs.module';
 import { SqsService } from 'sqs/sqs.service';
 

@@ -1,1 +1,1 @@
-export * from './NotFoundBeeException';
+export * from './ExistsBeeException';
