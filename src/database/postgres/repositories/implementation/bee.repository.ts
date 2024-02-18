@@ -43,11 +43,9 @@ export class BeeRepository implements IBeeRepository {
   }
 
   async findOne(condition: Partial<Bee>): Promise<Bee | null> {
-    if (this.query) {
-      this.query.where(condition);
-      return await this.query.getOne() as Bee | null;
-    }
-    return null;
+    this.query = this.repository.createQueryBuilder('bee');
+    this.query.where(condition);
+    return await this.query.getOne() as Bee | null;
   }
 
   async findMany(): Promise<{ list: Bee[]; count: number }> {
