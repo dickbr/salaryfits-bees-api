@@ -7,8 +7,13 @@ import { SendMessage } from 'core/use-cases/bees/send-message/send-message.use-c
 import { SqsService } from 'sqs/sqs.service';
 
 export const module_mock = async () => {
+  const sqsServer: Partial<SqsService> = {
+    sendMessage: jest.fn()
+  }
+
   return await Test.createTestingModule({
     providers: [
+      { provide: SqsService, useValue: sqsServer },
       {
         provide: IBeeRepository,
         useClass: FakeBeeRepository
@@ -16,7 +21,6 @@ export const module_mock = async () => {
       CreateBee,
       ListBee,
       SendMessage,
-      SqsService
     ],
   }).compile()
 }

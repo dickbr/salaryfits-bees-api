@@ -1,4 +1,4 @@
-import { RequestMethod, ValidationPipe } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
@@ -20,9 +20,7 @@ async function initializeApp() {
 
   app.useGlobalFilters(new ErrorHandlerMiddleware())
 
-  app.setGlobalPrefix('api', {
-    exclude: [{ path: 'health-check', method: RequestMethod.GET }]
-  })
+  app.setGlobalPrefix('api')
 
   return app;
 }

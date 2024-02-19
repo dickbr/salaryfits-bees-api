@@ -1,26 +1,24 @@
 import { Bee } from "@database/postgres/entities/bee.entity";
 import { FakeBeeRepository } from "@database/postgres/repositories/fake/bee.repository.fake";
 import { IBeeRepository } from "@database/postgres/repositories/interface/bee-repository.interface";
-import { Test } from "@nestjs/testing";
+import { module_mock } from "app.module.mock";
 import { NotFoundException } from "core/exceptions";
 import { randomUUID } from "crypto";
+import { SqsService } from "sqs/sqs.service";
 import { Input } from "./input";
-import { ReceiverMessage } from "./receiver-message.use-case";
+import { SendMessage } from "./send-message.use-case";
 
-describe('Receiver Message', () => {
-  let use_case: ReceiverMessage;
+describe('Send Message', () => {
+  let use_case: SendMessage;
   let repository: FakeBeeRepository;
 
-  beforeEach(async () => {
-    const moduleRef = await Test.createTestingModule({
-      providers: [
-        ReceiverMessage,
-        { provide: IBeeRepository, useClass: FakeBeeRepository },
-      ],
-    }).compile();
+  let sqsServer: Partial<SqsService> = {}
 
-    use_case = moduleRef.get<ReceiverMessage>(ReceiverMessage);
+  beforeEach(async () => {
+    const moduleRef = await module_mock()
+    use_case = moduleRef.get<SendMessage>(SendMessage);
     repository = moduleRef.get<IBeeRepository>(IBeeRepository) as FakeBeeRepository;
+    sqsServer = moduleRef.get<SqsService>(SqsService);
   });
 
   const input: Input = {
@@ -42,14 +40,18 @@ describe('Receiver Message', () => {
 
   it.each([
     {
-      should: 'receiver message from Bee successfuly',
+      should: 'send message from Bee successfuly',
       input,
       setup: () => {
         repository.findOne.mockResolvedValueOnce(senderBee);
         repository.findOne.mockResolvedValueOnce(receiverBee);
       },
       expected: (result: any) => {
-        expect(repository.findOne).toHaveBeenCalledTimes(2)
+        expect(sqsServer.sendMessage).toHaveBeenCalledWith(JSON.stringify({
+          sender: senderBee.id,
+          receiver: receiverBee.id,
+          content: input.content,
+        }))
         expect(result).toBeUndefined();
       }
     },

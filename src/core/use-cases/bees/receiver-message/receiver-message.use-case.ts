@@ -10,9 +10,10 @@ export class ReceiverMessage {
   ) { }
 
   async execute(input: Input): Promise<void> {
-
-    const senderBee = await this.reposiroy.find({ id: input.sender }).findOne();
-    const receiverBee = await this.reposiroy.find({ id: input.receiver }).findOne();
+    const [senderBee, receiverBee] = await Promise.all([
+      this.reposiroy.find({ id: input.sender }).findOne(),
+      this.reposiroy.find({ id: input.receiver }).findOne()
+    ])
 
     if (!senderBee || !receiverBee) {
       throw new NotFoundException();
