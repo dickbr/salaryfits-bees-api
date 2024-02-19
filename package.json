@@ -14,8 +14,8 @@
     "test:uncov": "jest --coverage=false",
     "test:e2e": "exit 1",
     "typeorm": "typeorm-ts-node-commonjs -d ./src/database/postgres/datasource.ts",
-    "migration:gen": "cross-env name=$name && yarn typeorm migration:generate ./src/database/postgres/migrations/$name",
-    "migration:create": "set /p name=Enter migration name: && npx typeorm-ts-node-commonjs migration:create ./src/database/postgres/migrations/%name%",
+    "migration:gen": "read name && yarn typeorm migration:generate ./src/database/postgres/migrations/$name",
+    "migration:create": "read name && npx typeorm-ts-node-commonjs migration:create ./src/database/postgres/migrations/$name",
     "migration:run:dev": "yarn typeorm migration:run",
     "migration:revert": "yarn typeorm migration:revert",
     "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run"
