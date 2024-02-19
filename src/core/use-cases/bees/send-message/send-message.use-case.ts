@@ -1,7 +1,8 @@
 import { IBeeRepository } from '@database/postgres/repositories/interface/bee-repository.interface';
 import { Injectable } from '@nestjs/common';
-import { NotFoundReceiverException } from 'core/exceptions/NotFoundReceiverException';
-import { NotFoundSeenderException } from 'core/exceptions/NotFoundSeenderException';
+import { plainToInstance } from 'class-transformer';
+import { validateOrReject } from 'class-validator';
+import { NotFoundException } from 'core/exceptions';
 import { SqsService } from 'sqs/sqs.service';
 import { Input } from './input';
 
@@ -13,22 +14,19 @@ export class SendMessage {
   ) { }
 
   async execute(input: Input): Promise<void> {
+    await validateOrReject(plainToInstance(Input, input));
 
-    const senderBee = await this.reposiroy.findOne({ name: input.sender });
-    const receiverBee = await this.reposiroy.findOne({ name: input.receiver });
+    const senderBee = await this.reposiroy.find({ name: input.sender }).findOne();
+    const receiverBee = await this.reposiroy.find({ name: input.receiver }).findOne();
 
-    if (!senderBee) {
-      throw new NotFoundSeenderException();
-    }
-    if (!receiverBee) {
-      throw new NotFoundReceiverException();
+    if (!senderBee || !receiverBee) {
+      throw new NotFoundException();
     }
 
     await this.sqsService.sendMessage(
-      'your-queue-url',
       JSON.stringify({
-        sender: input.sender,
-        receiver: input.receiver,
+        sender: senderBee.id,
+        receiver: receiverBee.id,
         content: input.content,
       })
     );

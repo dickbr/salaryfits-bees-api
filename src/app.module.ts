@@ -5,7 +5,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BeeController } from 'controllers/bees/bees.controller';
 import { CreateBee } from 'core/use-cases/bees/create-bee/create-bee.use-case';
-import { GetBee } from 'core/use-cases/bees/get-bees/get-bee.use-case';
+import { ListBee } from 'core/use-cases/bees/list-bee/list-bee.use-case';
 import { SendMessage } from 'core/use-cases/bees/send-message/send-message.use-case';
 import 'dotenv/config';
 import { SqsModule } from 'sqs/sqs.module';
@@ -34,7 +34,7 @@ import { SqsService } from 'sqs/sqs.service';
   ],
   providers: [
     CreateBee,
-    GetBee,
+    ListBee,
     SendMessage,
     SqsService,
     {

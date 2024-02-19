@@ -5,9 +5,8 @@ export abstract class IBeeRepository {
   abstract find(entity?: Partial<Bee>): this;
   abstract byName(input: { name?: string }): this;
   abstract paginate(page?: number, per_page?: number): this;
-  abstract findOne(condition: Partial<Bee>): Promise<Bee | null>;
+  abstract findOne(): Promise<Bee | null>;
   abstract findMany(): Promise<{ list: Bee[]; count: number }>;
-  abstract findAll(): Promise<Bee[]>;
   abstract delete(entity: Bee): Promise<void>;
   abstract printSql(): this;
 }

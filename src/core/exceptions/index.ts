@@ -1,4 +1,3 @@
 export * from './ExistsBeeException';
-export * from './NotFoundReceiverException';
-export * from './NotFoundSeenderException';
+export * from './NotFoundException';
 

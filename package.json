@@ -8,18 +8,20 @@
   "scripts": {
     "build": "nest build",
     "start": "node dist/index.js",
+    "dev:consumer": "tsnd --transpile-only --ignore-watch node_modules -r tsconfig-paths/register ./src/sqs/consumer.ts",
     "dev": "tsnd --transpile-only --ignore-watch node_modules -r tsconfig-paths/register ./src/index.ts",
     "test": "jest",
     "test:uncov": "jest --coverage=false",
     "test:e2e": "exit 1",
     "typeorm": "typeorm-ts-node-commonjs -d ./src/database/postgres/datasource.ts",
-    "migration:gen": "cross-env name=Enter migration name: && yarn typeorm migration:generate -n %name%",
+    "migration:gen": "cross-env name=$name && yarn typeorm migration:generate ./src/database/postgres/migrations/$name",
     "migration:create": "set /p name=Enter migration name: && npx typeorm-ts-node-commonjs migration:create ./src/database/postgres/migrations/%name%",
     "migration:run:dev": "yarn typeorm migration:run",
     "migration:revert": "yarn typeorm migration:revert",
     "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run"
   },
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.515.0",
     "@fastify/cors": "^8.3.0",
     "@fastify/formbody": "^7.4.0",
     "@fastify/swagger": "^8.6.0",
@@ -36,6 +38,7 @@
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
+    "sqs-consumer": "^8.2.0",
     "typeorm": "^0.3.20"
   },
   "devDependencies": {

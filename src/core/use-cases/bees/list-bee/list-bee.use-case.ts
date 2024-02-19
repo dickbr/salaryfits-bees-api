@@ -3,10 +3,10 @@ import { IBeeRepository } from '@database/postgres/repositories/interface/bee-re
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class GetBee {
+export class ListBee {
   constructor(private readonly repository: IBeeRepository) { }
 
-  async execute(): Promise<Bee[]> {
-    return this.repository.findAll();
+  async execute(): Promise<{ list: Bee[]; count: number; }> {
+    return this.repository.find().findMany();
   }
 }

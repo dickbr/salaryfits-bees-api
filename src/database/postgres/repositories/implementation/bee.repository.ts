@@ -11,7 +11,7 @@ export class BeeRepository implements IBeeRepository {
     @InjectRepository(Bee) private readonly repository: Repository<Bee>
   ) { }
 
-  private query?: SelectQueryBuilder<Bee> | undefined;
+  private query: SelectQueryBuilder<Bee> = null as unknown as SelectQueryBuilder<Bee>;
 
   async save(entity: Bee): Promise<Bee> {
     return await this.repository.save(entity);
@@ -42,10 +42,8 @@ export class BeeRepository implements IBeeRepository {
     return this;
   }
 
-  async findOne(condition: Partial<Bee>): Promise<Bee | null> {
-    this.query = this.repository.createQueryBuilder('bee');
-    this.query.where(condition);
-    return await this.query.getOne() as Bee | null;
+  async findOne(): Promise<Bee | null> {
+    return await this.query.getOne();
   }
 
   async findMany(): Promise<{ list: Bee[]; count: number }> {
@@ -54,7 +52,7 @@ export class BeeRepository implements IBeeRepository {
   }
 
   async delete(entity: Bee): Promise<void> {
-    await this.repository.delete(entity.id);
+    await this.repository.delete(entity.id as string);
   }
 
   printSql(): this {
@@ -64,11 +62,4 @@ export class BeeRepository implements IBeeRepository {
     });
     return this;
   }
-
-  async findAll(): Promise<Bee[]> {
-    const queryBuilder: SelectQueryBuilder<Bee> = this.repository.createQueryBuilder('bee');
-
-    return queryBuilder.getMany();
-  }
-
 }
