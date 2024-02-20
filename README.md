@@ -21,7 +21,7 @@ Siga as etapas abaixo para instalar e configurar o projeto:
 
 1. Clone o repositório:
 ````bash
-git clone https://github.com/seu-nome/salaryfits-bees-api.git
+git clone https://github.com/dickbr/salaryfits-bees-api.git
 ````
 
 2. Navegue até a pasta do projeto:
