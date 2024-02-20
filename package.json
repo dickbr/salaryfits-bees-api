@@ -1,7 +1,7 @@
 {
-  "name": "maxmilhas-cpf-api",
+  "name": "salaryfits-bees-api",
   "version": "0.0.1",
-  "description": "API Consulta CPF",
+  "description": "API RESTful de Mensageria com Abelhas",
   "author": "Jean Pierre",
   "private": true,
   "license": "UNLICENSED",

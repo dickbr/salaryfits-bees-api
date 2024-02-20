@@ -1,6 +1,8 @@
-# maxmilhas-blacklist-api
+# salaryftis-bees-api
 
-API para consulta de CPF (Cadastro de Pessoas Físicas) na lista negra.
+A Salaryfits Bees API é uma aplicação RESTful construída para gerenciar mensagens relacionadas a abelhas. Ela fornece uma interface para criar, listar e enviar mensagens para abelhas, facilitando a comunicação e o gerenciamento dessas criaturas.
+
+Esta API é desenvolvida usando o framework NestJS e utiliza o TypeORM para a interação com o banco de dados PostgreSQL. Além disso, ela integra-se com o AWS SQS para o envio de mensagens e possui suporte para testes automatizados com Jest.
 
 ## Pré-requisitos
 
@@ -8,52 +10,88 @@ Antes de começar, certifique-se de ter instalado em seu sistema:
 
 - [Node.js](https://nodejs.org/)
 - [Yarn](https://yarnpkg.com/)
-- [Docker](https://docs.docker.com/get-docker/)
 - Um banco de dados PostgreSQL
+- Uma conta AWS com permissões adequadas para acessar o SQS.
 
+## Instalação
 
-## Configuração
+Antes de começar, certifique-se de ter o NodeJS e o NPM instalados. Além disso, você precisará de um banco de dados PostgreSQL.
 
-Copie o arquivo de exemplo `.env` e configure as variáveis de ambiente:
+Siga as etapas abaixo para instalar e configurar o projeto:
 
-```bash 
+1. Clone o repositório:
+````bash
+git clone https://github.com/seu-nome/salaryfits-bees-api.git
+````
+
+2. Navegue até a pasta do projeto:
+````bash
+cd salaryfits-bees-api
+````
+
+3. Instale as dependências do projeto:
+````bash
+yarn install
+````
+
+4. Crie um arquivo `.env` com as variáveis de ambiente necessárias para o desenvolvimento. Você pode copiar o arquivo `.env.example` e modificar as variáveis conforme necessário:
+````bash
 cp .env.example .env
-```
+````
 
-Edite o arquivo `.env` com suas configurações de banco de dados e outras variáveis necessárias.
+5. Configure o banco de dados PostgreSQL e outras configurações no arquivo `.env`.
+
+6. Execute as migrações do banco de dados, se necessário:
+````bash
+yarn migration:run:dev
+````
+
+7. Inicie o servidor de desenvolvimento:
+````bash
+yarn dev
+````
+
+O projeto agora deve estar rodando e pronto para ser usado.
+
+### Scripts Disponíveis
+
+- `yarn build`: Compila o projeto para produção.
+- `yarn start`: Inicia o servidor em modo de produção.
+- `yarn dev`: Inicia o servidor em modo de desenvolvimento.
+- `yarn test`: Executa os testes do projeto.
+- `yarn migration:gen`: Gera uma nova migração.
+- `yarn migration:run`: Executa as migrações pendentes.
+- `yarn migration:revert`: Reverte a última migração executada.
+
+## Uso
+
+Este projeto é um serviço RESTful criado com o NestJS. Ele fornece três rotas principais:
+
+### Criar uma abelha
+
+- **Método**: POST
+- **URL**: `/bees`
+- **Corpo da solicitação**: Um objeto JSON representando uma nova abelha a ser criada. Deve seguir o formato definido pelo `CreateBeeRequest`.
+- **Resposta**: Um objeto JSON representando a abelha criada.
+
+Exemplo de solicitação:
+
+json { "name": "Abelha 1" }
 
 
-## Construção e Execução com Docker
+### Listar todas as abelhas
 
-Construa e execute o container Docker:
+- **Método**: GET
+- **URL**: `/bees`
+- **Resposta**: Um array de objetos JSON, onde cada objeto representa uma abelha.
 
-```bash 
-docker build -t maxmilhas-blacklist-api .
-```
+### Enviar uma mensagem
 
-```bash 
-docker run --network host -p 3001:3001 -d maxmilhas-blacklist-api
-```
+- **Método**: POST
+- **URL**: `/bees/messages`
+- **Corpo da solicitação**: Um objeto JSON representando uma mensagem a ser enviada. Deve seguir o formato definido pelo `MessageRequest`.
+- **Resposta**: Um objeto JSON representando a mensagem enviada.
 
-## Rotas
+Exemplo de solicitação:
 
-Aqui estão algumas das rotas disponíveis:
-
-- `POST /api/cpf`: Adiciona um CPF à lista negra.
-- `GET /api/cpf/{cpf}`: Recupera informações de um CPF específico.
-- `GET /api/cpf`: Lista todos os CPFs na lista negra.
-- `DELETE /api/cpf/{cpf}`: Remove um CPF da lista negra.
-- `POST /api/client`: Adiciona um novo cliente (PO).
-- `GET /api/client/{cpf}`: Recupera informações de um cliente (PO) específico.
-
-## Testes
-
-Execute os testes unitários e de integração dentro do container Docker:
-
-```bash 
-yarn test
-```
-
-## Licença
-
-Este projeto está licenciado sob a licença [MIT](#).
+json { "sender": "Abelha 1", "receiver": "Abelha 2", "content": "Mel encontrado" }
