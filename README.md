@@ -67,16 +67,13 @@ O projeto agora deve estar rodando e pronto para ser usado.
 
 Este projeto é um serviço RESTful criado com o NestJS. Ele fornece três rotas principais:
 
+
 ### Criar uma abelha
 
 - **Método**: POST
 - **URL**: `/bees`
-- **Corpo da solicitação**: Um objeto JSON representando uma nova abelha a ser criada. Deve seguir o formato definido pelo `CreateBeeRequest`.
-- **Resposta**: Um objeto JSON representando a abelha criada.
-
-Exemplo de solicitação:
-
-json { "name": "Abelha 1" }
+- **Corpo da solicitação**: Um objeto JSON representando uma nova abelha a ser criada. Exemplo: { "name": "Abelha 1" }.
+- **Resposta**: Um objeto JSON representando a abelha criada. Exemplo: { name": "Abelha 1", "id": "f3ffda40-e8a8-4f4a-abcd-94aaad0d1649" }
 
 
 ### Listar todas as abelhas
@@ -85,13 +82,24 @@ json { "name": "Abelha 1" }
 - **URL**: `/bees`
 - **Resposta**: Um array de objetos JSON, onde cada objeto representa uma abelha.
 
+Exemplo de resposta: {"list": [{id": "f3ffda40-e8a8-4f4a-abcd-94aaad0d1649", "name": "Abelha 1" }, {"id": "0cbe40fa-48ae-428a-a1de-14af32cd449e", "name": "Abelha 2" }], "count": 2}
+
+
 ### Enviar uma mensagem
 
 - **Método**: POST
 - **URL**: `/bees/messages`
-- **Corpo da solicitação**: Um objeto JSON representando uma mensagem a ser enviada. Deve seguir o formato definido pelo `MessageRequest`.
+- **Corpo da solicitação**: Um objeto JSON representando uma mensagem a ser enviada. Exemplo: { "sender": "Abelha 1", "receiver": "Abelha 2", "content": "Mel encontrado" }
 - **Resposta**: Um objeto JSON representando a mensagem enviada.
 
-Exemplo de solicitação:
+## Testes
 
-json { "sender": "Abelha 1", "receiver": "Abelha 2", "content": "Mel encontrado" }
+Execute os testes unitários e de integração:
+
+```bash 
+yarn test
+```
+
+## Licença
+
+Este projeto está licenciado sob a licença [MIT](#).
